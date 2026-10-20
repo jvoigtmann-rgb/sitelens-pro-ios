@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Safe area insets for iOS notch / home indicator */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Momentum scrolling for horizontally scrollable tables on iOS */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbars in mobile WebView for a more native feel */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
+}
+
+/* Disable overscroll bounce on iOS WebView */
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* System dark mode auto-toggle */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+  html:not(.light) {
+    --background: 220 20% 7%;
+    --foreground: 40 10% 95%;
+    --card: 220 18% 10%;
+    --card-foreground: 40 10% 95%;
+    --popover: 220 18% 10%;
+    --popover-foreground: 40 10% 95%;
+    --primary: 220 60% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 40 10% 90%;
+    --muted: 220 12% 18%;
+    --muted-foreground: 220 10% 55%;
+    --accent: 25 80% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 12% 18%;
+    --input: 220 12% 18%;
+    --ring: 220 60% 55%;
+  }
+}
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Playfair Display', serif;
+
+    --background: 40 20% 98%;
+    --foreground: 220 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
+    --primary: 220 60% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 15% 94%;
+    --secondary-foreground: 220 20% 15%;
+    --muted: 40 10% 93%;
+    --muted-foreground: 220 10% 45%;
+    --accent: 25 80% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 10% 88%;
+    --input: 40 10% 88%;
+    --ring: 220 60% 45%;
+    --chart-1: 220 60% 45%;
+    --chart-2: 25 80% 55%;
+    --chart-3: 150 50% 40%;
+    --chart-4: 0 72% 51%;
+    --chart-5: 280 50% 50%;
+    --radius: 0.75rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 20% 7%;
+    --foreground: 40 10% 95%;
+    --card: 220 18% 10%;
+    --card-foreground: 40 10% 95%;
+    --popover: 220 18% 10%;
+    --popover-foreground: 40 10% 95%;
+    --primary: 220 60% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 40 10% 90%;
+    --muted: 220 12% 18%;
+    --muted-foreground: 220 10% 55%;
+    --accent: 25 80% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 12% 18%;
+    --input: 220 12% 18%;
+    --ring: 220 60% 55%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  /* Prevent accidental text selection on interactive chrome (iOS/touch friendly) */
+  button,
+  a,
+  header,
+  nav a {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  /* Keep body text paragraphs fully selectable */
+  p {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+@page {
+  size: A4 portrait;
+  margin: 10mm 12mm;
+}
+
+@media print {
+  /* Keep the report on light tokens even when the system is in dark mode */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 20% 10%;
+    --border: 214 12% 88%;
+    --muted: 210 14% 94%;
+    --muted-foreground: 220 10% 40%;
+  }
+
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide nav, action bar, anything outside the report */
+  nav,
+  header,
+  .print-hide {
+    display: none !important;
+  }
+
+  /* Strip card chrome for print */
+  #printable-report {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Avoid page breaks inside photos and narrative blocks */
+  img {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    max-width: 100% !important;
+  }
+
+  .space-y-8 > * {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Hide all interactive buttons */
+  button,
+  [role="button"] {
+    display: none !important;
+  }
+
+  /* Ensure text is readable */
+  * {
+    color-adjust: exact;
+  }
+}
