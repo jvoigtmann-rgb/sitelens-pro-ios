@@ -8,8 +8,8 @@ workflows:
         - sitelens_ios
       ios_signing:
         distribution_type: app_store
-        VITE_REVENUECAT_APPLE_PUBLIC_KEY: "appl_DzhGZLGkODLbsRuTafFeoSoSeLc"
-        # Set VITE_BASE44_APP_ID and other required Base44 config in Codemagic environment variables.
+        bundle_identifier: com.base6a92d4567d7a3a8b4ec54b7b.app
+      vars:
       node: 22
       xcode: latest
       cocoapods: default
