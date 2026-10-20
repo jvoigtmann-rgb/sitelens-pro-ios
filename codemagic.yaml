@@ -22,7 +22,8 @@ workflows:
             "com.base6a92d4567d7a3a8b4ec54b7b.app" \
             --type IOS_APP_STORE \
             --issuer-id "$APP_STORE_CONNECT_ISSUER_ID" \
-            --create
+            --key-id "7LV5AA93ND" \
+            --create            
 
 
       - name: Install dependencies
