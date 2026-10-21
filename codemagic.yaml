@@ -11,10 +11,10 @@ workflows:
         bundle_identifier: com.base6a92d4567d7a3a8b4ec54b7b.app
       vars:
         VITE_REVENUECAT_APPLE_PUBLIC_KEY: appl_DzhGZLGkODLbsRuTafFeoSoSeLc      
-      node: 22
+            node: 22
       xcode: latest
       cocoapods: default
-        scripts:
+    scripts:
       - name: Fetch Apple signing files
         script: |
           app-store-connect fetch-signing-files \
