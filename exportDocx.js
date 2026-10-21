@@ -312,8 +312,30 @@ export async function exportReportToDocx(reportTitle = "inspection-report", repo
 
   const blob = await Packer.toBlob(doc);
   const filename = `${(reportTitle || "report").replace(/[^a-z0-9]/gi, "_")}.docx`;
+  if (window.Capacitor?.isNativePlatform()) {
+    const { Filesystem, Directory } = await import("@capacitor/filesystem");
+    const { Share } = await import("@capacitor/share");
 
-  // iOS Safari / WebView: use FileReader to get a data URL and open in new tab
+    const base64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+
+    const file = await Filesystem.writeFile({
+      path: filename,
+      data: base64,
+      directory: Directory.Cache,
+    });
+
+    await Share.share({
+      title: "SiteLens Pro Word Report",
+      url: file.uri,
+      dialogTitle: "Save or Share Word Document",
+    });
+    return;
+  }// iOS Safari / WebView: use FileReader to get a data URL and open in new tab
   const isIOS = /ipad|iphone|ipod/i.test(navigator.userAgent) || 
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
