@@ -736,5 +736,26 @@ export async function exportReportToPdf(reportTitle = "inspection-report", repor
   addRunningHeadersToAllPortrait(builder, report);
 
   // ── Save ──
-  builder.save(`${(reportTitle || "report").replace(/[^a-z0-9]/gi, "_")}.pdf`);
+    const filename = `${(reportTitle || "report").replace(/[^a-z0-9]/gi, "_")}.pdf`;
+
+  if (window.Capacitor?.isNativePlatform()) {
+    const { Filesystem, Directory } = await import("@capacitor/filesystem");
+    const { Share } = await import("@capacitor/share");
+
+    const pdfData = builder.doc.output("datauristring").split(",")[1];
+
+    const file = await Filesystem.writeFile({
+      path: filename,
+      data: pdfData,
+      directory: Directory.Cache,
+    });
+
+    await Share.share({
+      title: "SiteLens Pro Report",
+      url: file.uri,
+      dialogTitle: "Save or Share PDF",
+    });
+  } else {
+    builder.save(filename);
+  }
 }
