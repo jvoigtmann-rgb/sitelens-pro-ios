@@ -1,0 +1,97 @@
+{
+  "name": "InspectionPhoto",
+  "type": "object",
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": {
+      "created_by": "{{user.email}}"
+    },
+    "delete": {
+      "created_by": "{{user.email}}"
+    }
+  },
+  "properties": {
+    "report_id": {
+      "type": "string"
+    },
+    "section_id": {
+      "type": "string",
+      "description": "Optional: links photo to an InspectionSection"
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "room_area": {
+      "type": "string"
+    },
+    "analysis": {
+      "type": "string"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "cost_min": {
+            "type": "number"
+          },
+          "cost_max": {
+            "type": "number"
+          },
+          "remediation_status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "in_progress",
+              "resolved"
+            ],
+            "default": "open"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "uploading",
+        "analyzing",
+        "draft",
+        "completed",
+        "error"
+      ],
+      "default": "uploading"
+    },
+    "lat": {
+      "type": "number",
+      "description": "GPS latitude"
+    },
+    "lng": {
+      "type": "number",
+      "description": "GPS longitude"
+    }
+  },
+  "required": [
+    "report_id",
+    "photo_url"
+  ]
+}

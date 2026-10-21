@@ -1,0 +1,56 @@
+{
+  "properties": {
+    "role": {
+      "type": "string",
+      "description": "The role of the user in the app",
+      "enum": [
+        "admin",
+        "user"
+      ]
+    },
+    "credits": {
+      "type": "number",
+      "default": 0,
+      "description": "Inspection-report credits from one-time report-pack purchases. Each inspection consumes 1 credit."
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "pro"
+      ],
+      "default": "free",
+      "description": "Subscription plan. 'pro' (Pro subscription active) includes a monthly report allowance."
+    },
+    "free_report_used": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the user has used their one-time free first inspection report (non-Pro users)."
+    },
+    "pro_trial_until": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End of the Pro free-trial window. While now < this date the user is limited to 1 trial report."
+    },
+    "trial_reports_used": {
+      "type": "number",
+      "default": 0,
+      "description": "Inspection reports used during the Pro free trial (capped at 1)."
+    },
+    "pro_reports_used": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of inspection reports used in the current paid-term Pro billing window."
+    },
+    "pro_period_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of the current rolling 30-day paid-term Pro report window."
+    }
+  },
+  "required": [
+    "role"
+  ],
+  "name": "User",
+  "type": "object"
+}

@@ -4,18 +4,16 @@ workflows:
     instance_type: mac_mini_m2
     max_build_duration: 120
     environment:
-      groups:
-        - sitelens_ios
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.base6a92d4567d7a3a8b4ec54b7b.app
       vars:
-        VITE_REVENUECAT_APPLE_PUBLIC_KEY: appl_DzhGZLGkODLbsRuTafFeoSoSeLc      
+        VITE_REVENUECAT_APPLE_PUBLIC_KEY: "appl_DzhGZLGkODLbsRuTafFeoSoSeLc"
+        # Set VITE_BASE44_APP_ID and other required Base44 config in Codemagic environment variables.
       node: 22
       xcode: latest
       cocoapods: default
     scripts:
-      
       - name: Install dependencies
         script: npm install --no-audit --no-fund
       - name: Generate iOS project

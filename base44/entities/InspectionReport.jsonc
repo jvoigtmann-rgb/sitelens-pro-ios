@@ -1,0 +1,180 @@
+{
+  "name": "InspectionReport",
+  "type": "object",
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "write": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "city_state": {
+      "type": "string"
+    },
+    "prepared_by": {
+      "type": "string"
+    },
+    "inspection_date": {
+      "type": "string"
+    },
+    "report_purpose": {
+      "type": "string"
+    },
+    "cover_photo_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "in_progress",
+        "completed"
+      ],
+      "default": "in_progress"
+    },
+    "property_type": {
+      "type": "string",
+      "enum": [
+        "residential",
+        "commercial",
+        "industrial",
+        "multifamily",
+        "land"
+      ],
+      "default": "residential"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "quick_notes": {
+      "type": "string"
+    },
+    "executive_summary": {
+      "type": "string"
+    },
+    "operations_summary": {
+      "type": "string"
+    },
+    "building_summary": {
+      "type": "string"
+    },
+    "market_summary": {
+      "type": "string"
+    },
+    "total_issues": {
+      "type": "number",
+      "default": 0
+    },
+    "critical_issues": {
+      "type": "number",
+      "default": 0
+    },
+    "total_approx_cost": {
+      "type": "number",
+      "default": 0
+    },
+    "total_cost_min": {
+      "type": "number",
+      "default": 0
+    },
+    "total_cost_max": {
+      "type": "number",
+      "default": 0
+    },
+    "hidden_sections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "overall_condition": {
+      "type": "string",
+      "description": "Letter grade A-F from AI executive dashboard"
+    },
+    "deferred_maintenance": {
+      "type": "string",
+      "description": "Low/Medium/High"
+    },
+    "capex_risk": {
+      "type": "string",
+      "description": "Low/Medium/High"
+    },
+    "investment_opinion": {
+      "type": "string"
+    },
+    "system_health": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "system": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

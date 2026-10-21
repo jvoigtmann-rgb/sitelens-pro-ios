@@ -1,0 +1,124 @@
+{
+  "name": "AppleSubscription",
+  "type": "object",
+  "description": "Server-side Apple (RevenueCat) subscription entitlement state. Written only by the revenuecat-webhook and apple-subscription-status backend functions; the client can never modify it.",
+  "properties": {
+    "base44_user_id": {
+      "type": "string",
+      "description": "Base44 user id. The native iOS wrapper uses this exact id as the RevenueCat app_user_id, so webhook events bind to the right account without trusting client input."
+    },
+    "pro_status": {
+      "type": "string",
+      "enum": [
+        "trial",
+        "active",
+        "expired"
+      ],
+      "default": "expired"
+    },
+    "pro_period": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "annual",
+        "none"
+      ],
+      "default": "none"
+    },
+    "pro_product_id": {
+      "type": "string",
+      "description": "Apple product id of the current subscription"
+    },
+    "pro_expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End of the current paid/trial period. Access stops after this moment regardless of stored status."
+    },
+    "paid_period_started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of the current 30-day reporting window for the 10-reports-per-month allowance"
+    },
+    "paid_period_reports_used": {
+      "type": "number",
+      "default": 0
+    },
+    "trial_reports_used": {
+      "type": "number",
+      "default": 0
+    },
+    "credits": {
+      "type": "number",
+      "default": 0,
+      "description": "Report credits from consumable Apple purchases"
+    },
+    "canceled_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Auto-renew turned off or refunded; access continues until pro_expires_at"
+    },
+    "billing_issue_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last failed charge attempt; access continues until pro_expires_at"
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "PRODUCTION",
+        "SANDBOX"
+      ],
+      "default": "PRODUCTION"
+    },
+    "last_verified_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last server-side re-verification against the RevenueCat REST API"
+    },
+    "last_event_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "processed_event_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Recent RevenueCat event ids used for idempotent webhook processing"
+    }
+  },
+  "required": [
+    "base44_user_id",
+    "pro_status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.base44_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
