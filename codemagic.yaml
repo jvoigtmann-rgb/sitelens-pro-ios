@@ -14,7 +14,7 @@ workflows:
             node: 22
       xcode: latest
       cocoapods: default
-    scripts:
+   scripts:
       - name: Fetch Apple signing files
         script: |
           app-store-connect fetch-signing-files \
