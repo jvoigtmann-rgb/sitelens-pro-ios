@@ -81,6 +81,8 @@
     "zod": "^3.24.2",
     "@capacitor/core": "^7.0.0",
     "@capacitor/ios": "^7.0.0",
+    "@capacitor/share": "^7.0.0",
+    "@capacitor/filesystem": "^7.0.0",   
     "@revenuecat/purchases-capacitor": "^11.0.0"
   },
   "devDependencies": {
