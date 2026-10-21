@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from '@/App.jsx'
-import { installNativeBridge } from '@/native/revenuecatBridge'
+import { installNativeBridge } from './native/revenuecatBridge.js'
 installNativeBridge()
 import '@/index.css'
 
