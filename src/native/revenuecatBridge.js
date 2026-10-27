@@ -3,7 +3,11 @@ import { Purchases } from '@revenuecat/purchases-capacitor';
 import { base44 } from '@/api/base44Client';
 
 const API_KEY = import.meta.env.VITE_REVENUECAT_APPLE_PUBLIC_KEY;
-const PRODUCT_ID = 'pro_monthly';
+const PRODUCT_IDS = [
+  'pro_monthly',
+  'report_1',
+  'report_3'
+];
 let configured = false;
 let identity = null;
 function event(type, detail = {}) { window.dispatchEvent(new CustomEvent(type, { detail })); }
@@ -32,11 +36,11 @@ export function installNativeBridge() {
   window.SiteLensNative = {
     isNative: true,
     async purchase(productIdentifier) {
-      if (productIdentifier !== PRODUCT_ID) throw new Error('Unknown Apple subscription product.');
+      if (!PRODUCT_IDS.includes(productIdentifier) throw new Error('Unknown Apple subscription product.');
       await setup();
       const { offerings } = await Purchases.getOfferings();
-      const packages = [offerings?.current?.monthly, ...(offerings?.current?.availablePackages || [])].filter(Boolean);
-      const selected = packages.find(p => p.product?.identifier === PRODUCT_ID);
+      const packages = offerings?.current?.availablePackages || [];
+      const selected = packages.find(p => p.product?.identifier === productIdentifier);
       if (!selected) throw new Error('The Apple subscription is not available. Check the RevenueCat offering and App Store Connect.');
       try {
         const result = await Purchases.purchasePackage({ aPackage: selected });
