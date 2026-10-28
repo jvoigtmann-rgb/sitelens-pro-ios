@@ -36,7 +36,7 @@ export function installNativeBridge() {
   window.SiteLensNative = {
     isNative: true,
     async purchase(productIdentifier) {
-      if (!PRODUCT_IDS.includes(productIdentifier) throw new Error('Unknown Apple subscription product.');
+      if (!PRODUCT_IDS.includes(productIdentifier)) throw new Error('Unknown Apple subscription product.');
       await setup();
       const { offerings } = await Purchases.getOfferings();
       const packages = offerings?.current?.availablePackages || [];
