@@ -8,8 +8,8 @@ import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
 import GoogleIcon from "@/components/GoogleIcon";
 import AppleIcon from "@/components/AppleIcon";
-import { safeReturnTo } from "@/lib/authReturnTo";
-
+import { isNativeShell } from "@/lib/nativeEnv";
+import { startNativeProviderAuth } from "@/lib/nativeAuth";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
