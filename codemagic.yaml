@@ -25,8 +25,12 @@ workflows:
           npm run build
           npx cap add ios
           npx cap sync ios
-      - name: Set build number and signing
-        script: |
+          /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes array" ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes:0 dict" ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes:0:CFBundleURLSchemes array" ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes:0:CFBundleURLSchemes:0 string sitelenspro" ios/App/App/Info.plist      - name: Set build number and signing
+      - name: Set build number and signing        
+            script: |
           cd ios/App
           /usr/libexec/PlistBuddy -c 'Set :CFBundleVersion 10' App/Info.plist || true
           xcode-project use-profiles
