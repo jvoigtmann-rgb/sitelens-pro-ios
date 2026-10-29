@@ -8,7 +8,9 @@ export const base44 = createClient({
   appId,
   token,
   functionsVersion,
-  serverUrl: '',
+  serverUrl: window.Capacitor?.isNativePlatform?.()
+  ? 'https://app.sitelens-pro.com'
+  : '',
   requiresAuth: false,
   appBaseUrl
 });

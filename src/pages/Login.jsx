@@ -8,8 +8,8 @@ import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
 import GoogleIcon from "@/components/GoogleIcon";
 import AppleIcon from "@/components/AppleIcon";
-import { safeReturnTo } from "@/lib/authReturnTo";
-
+import { isNativeShell } from "@/lib/nativeEnv";
+import { startNativeProviderAuth } from "@/lib/nativeAuth";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +35,11 @@ export default function Login() {
 
   const handleGoogle = async () => {
     try {
-      await base44.auth.loginWithProvider("google", returnTo);
+      if (isNativeShell()) {
+        await startNativeProviderAuth("google", import.meta.env.VITE_BASE44_APP_ID);
+}       else {
+        await base44.auth.loginWithProvider("google", returnTo);
+}
     } catch (err) {
       setError(err?.message || "Could not start Google sign-in. Please try again.");
     }
@@ -43,7 +47,11 @@ export default function Login() {
 
   const handleApple = async () => {
     try {
-      await base44.auth.loginWithProvider("apple", returnTo);
+      if (isNativeShell()) {
+        await startNativeProviderAuth("apple", import.meta.env.VITE_BASE44_APP_ID);
+}       else {
+        await base44.auth.loginWithProvider("apple", returnTo);
+}
     } catch (err) {
       setError(err?.message || "Could not start Apple sign-in. Please try again.");
     }
