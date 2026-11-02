@@ -36,8 +36,7 @@ workflows:
           xcode-project use-profiles
       - name: Build IPA
         script: |
-          xcodebuild -workspace ios/App/App.xcworkspace -scheme App -showBuildSettings 2>&1 | tee /tmp/xcode-diagnostic.log
-          exit ${PIPESTATUS[0]}
+          xcodebuild -list -workspace ios/App/App.xcworkspace
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
