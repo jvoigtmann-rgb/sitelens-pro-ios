@@ -32,7 +32,7 @@ workflows:
       - name: Set build number and signing        
         script: |
           cd ios/App
-          /usr/libexec/PlistBuddy -c 'Set :CFBundleVersion 12' App/Info.plist || true
+          /usr/libexec/PlistBuddy -c 'Set :CFBundleVersion 13' App/Info.plist || true
           xcode-project use-profiles
       - name: Build IPA
         script: |
