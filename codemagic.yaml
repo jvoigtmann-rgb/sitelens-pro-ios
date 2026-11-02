@@ -41,7 +41,7 @@ workflows:
       - name: Build IPA
         script: |
           mkdir -p ios/App/App.xcodeproj/xcshareddata/xcschemes
-          xcode-project build-ipa --project ios/App/App.xcodeproj --scheme App
+          xcode-project build-ipa --workspace ios/App/App.xcworkspace --scheme App
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
