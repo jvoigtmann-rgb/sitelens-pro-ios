@@ -38,7 +38,7 @@ function App() {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
-        <NativeAuthListener />       
+        {/* <NativeAuthListener /> */}      
         <Router>
           <Suspense fallback={<PageLoader />}>
           <Routes>
