@@ -34,8 +34,8 @@ workflows:
           cd ios/App
           /usr/libexec/PlistBuddy -c 'Set :CFBundleVersion 17' App/Info.plist || true
           xcode-project use-profiles
-       - name: Build IPA
-         script: |
+      - name: Build IPA
+        script: |
           xcodebuild -workspace ios/App/App.xcworkspace -scheme App -showBuildSettings 2>&1 | tee /tmp/xcode-diagnostic.log
           exit ${PIPESTATUS[0]}
     artifacts:
