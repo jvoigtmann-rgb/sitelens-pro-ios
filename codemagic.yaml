@@ -25,6 +25,7 @@ workflows:
           npm run build
           npx cap add ios
           npx cap sync ios
+          ls -la ios/App/App/        
           cd ios/App
           pod install
           cd ../..          
