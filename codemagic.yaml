@@ -39,6 +39,7 @@ workflows:
           xcode-project use-profiles
       - name: Build IPA
         script: |
+          mkdir -p ios/App/App.xcodeproj/xcshareddata/xcschemes
           xcode-project build-ipa --project ios/App/App.xcodeproj --scheme App
     artifacts:
       - build/ios/ipa/*.ipa
