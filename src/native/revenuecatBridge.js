@@ -36,6 +36,9 @@ export function installNativeBridge() {
   if (Capacitor.getPlatform() !== 'ios' || !Capacitor.isNativePlatform()) return;
   window.SiteLensNative = {
     isNative: true,
+    async openAuthSession(url) {
+      await Browser.open({ url });
+},
     async purchase(productIdentifier) {
       if (!PRODUCT_IDS.includes(productIdentifier)) throw new Error('Unknown Apple subscription product.');
       await setup();
