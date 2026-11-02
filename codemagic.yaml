@@ -36,7 +36,7 @@ workflows:
           xcode-project use-profiles
       - name: Build IPA
         script: |
-          xcodebuild -list -project ios/App/App.xcodeproj
+          xcode-project build-ipa --project ios/App/App.xcodeproj --scheme App
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
