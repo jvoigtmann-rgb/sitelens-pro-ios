@@ -10,11 +10,9 @@ import GoogleIcon from "@/components/GoogleIcon";
 import AppleIcon from "@/components/AppleIcon";
 import { isNativeShell } from "@/lib/nativeEnv";
 import { startNativeProviderAuth } from "@/lib/nativeAuth";
-import { isNativeShell } from "@/lib/nativeEnv";
-import { startNativeProviderAuth } from "@/lib/nativeAuth";
 import { safeReturnTo } from '@/lib/authReturnTo';
 
-export default function Login() {export default function Login() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
