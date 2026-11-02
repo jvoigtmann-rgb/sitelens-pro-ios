@@ -25,6 +25,10 @@ workflows:
           npm run build
           npx cap add ios
           npx cap sync ios
+          mkdir -p ios/App/App/public
+          cp -R dist/. ios/App/App/public/
+          touch ios/App/App/config.xml
+          test -f ios/App/App/capacitor.config.json || echo '{"appId":"com.base6a92d4567d7a3a8b4ec54b7b.app","appName":"SiteLens Pro","webDir":"public"}' > ios/App/App/capacitor.config.json  
           ls -la ios/App/App/        
           cd ios/App
           pod install
