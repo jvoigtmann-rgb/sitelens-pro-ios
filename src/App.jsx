@@ -15,7 +15,8 @@ import Layout from './components/Layout';
 import Legal from './pages/Legal';
 import ThankYou from './pages/ThankYou';
 import NativeAuthCallback from './pages/NativeAuthCallback';
-// Heavy route pages are code-split so the initial bundle stays small (mobile)
+import NativeAuthListener from './components/NativeAuthListener';
+/ Heavy route pages are code-split so the initial bundle stays small (mobile)
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const NewInspection = lazy(() => import('./pages/NewInspection'));
 const ReportView = lazy(() => import('./pages/ReportView'));
@@ -37,11 +38,10 @@ function App() {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
-        {/* <NativeAuthListener /> */}      
+        <NativeAuthListener />     
         <Router>
           <Suspense fallback={<PageLoader />}>
           <Routes>
-            {/* Public auth routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/native-auth-callback" element={<NativeAuthCallback />} />
             <Route path="/register" element={<Register />} />
