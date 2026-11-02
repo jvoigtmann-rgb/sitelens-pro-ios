@@ -1,4 +1,5 @@
 import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
 import { Purchases } from '@revenuecat/purchases-capacitor';
 import { base44 } from '@/api/base44Client';
 
