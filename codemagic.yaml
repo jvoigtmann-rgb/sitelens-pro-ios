@@ -25,6 +25,9 @@ workflows:
           npm run build
           npx cap add ios
           npx cap sync ios
+          cd ios/App
+          pod install
+          cd ../..          
           /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes array" ios/App/App/Info.plist
           /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes:0 dict" ios/App/App/Info.plist
           /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes:0:CFBundleURLSchemes array" ios/App/App/Info.plist
