@@ -22,7 +22,7 @@ function showError(message) {
 }
 
 window.addEventListener('error', (event) => {
-  showError('JavaScript error:\n' + (event.error?.stack || event.message))
+  showError('JavaScript error:\n' + event.message + '\n\n' + (event.error?.stack || 'No stack available'))
 })
 
 window.addEventListener('unhandledrejection', (event) => {
