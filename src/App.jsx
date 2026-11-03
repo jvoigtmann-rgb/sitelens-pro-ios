@@ -43,6 +43,7 @@ function App() {
           <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/native-callback" element={<NativeAuthCallback />} />
             <Route path="/native-auth-callback" element={<NativeAuthCallback />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
