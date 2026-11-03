@@ -13,14 +13,20 @@ export default function NativeAuthCallback() {
     const search = new URLSearchParams(window.location.search);
     // app-params.js may already have moved ?access_token into storage.
     const token = search.get("access_token") || window.localStorage.getItem("base44_access_token");
-    if (!token) return;
+    if (!token) {
+    const status = document.getElementById('auth-status');
+    if (status) {
+    status.textContent = 'Sign-in failed: authentication token not received.';
+  }
+  return;
+}
     window.history.replaceState({}, document.title, window.location.pathname);
     window.location.replace(`${NATIVE_AUTH_SCHEME}://auth?access_token=${encodeURIComponent(token)}`);
   }, []);
 
   return (
     <div className="flex items-center justify-center min-h-[50vh] p-6 text-sm text-muted-foreground">
-      Completing sign-in…
+      Completing sign-in…id="auth-status"    
     </div>
   );
 }
