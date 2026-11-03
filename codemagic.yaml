@@ -22,6 +22,7 @@ workflows:
         script: npm install --no-audit --no-fund
       - name: Generate iOS project
         script: |
+          set -e
           npm run build
           npx cap add ios
           npx cap sync ios
