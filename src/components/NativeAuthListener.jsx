@@ -17,7 +17,7 @@ export default function NativeAuthListener() {
   const { checkAppState } = useAuth();
 
   useEffect(() => {
-    if (!window.SiteLensNative) return undefined;
+ 
 
     let handled = false;
 
@@ -52,10 +52,39 @@ export default function NativeAuthListener() {
 
     const onCallback = (event) => finish(event.detail?.url);
     window.addEventListener("sitelens:auth-callback", onCallback);
+    let nativeListener;
 
-    readInitialCallback()
-      .then((url) => { if (url) finish(url); })
-      .catch(() => {});
+    let listenerCancelled = false;
+
+CapacitorApp.addListener("appUrlOpen", ({ url }) => {
+  if (url?.startsWith("sitelenspro://auth")) {
+    finish(url);
+  }
+}).then((listener) => {
+  if (listenerCancelled) {
+    listener.remove();
+  } else {
+    nativeListener = listener;
+  }
+}).catch((error) => {
+  console.error("Native auth listener error:", error);
+});
+
+  readInitialCallback()
+    .then((url) => {
+      if (url) finish(url);
+    })
+    .catch(() => {});
+
+  CapacitorApp.getLaunchUrl()
+    .then(({ url }) => {
+      if (url?.startsWith("sitelenspro://auth")) {
+        finish(url);
+      }
+    })
+    .catch((error) => {
+      console.error("Native auth launch URL error:", error);
+    });
 
     // App was already running when the scheme opened (auth session dismissed
     // early): the pending callback shows up once it becomes visible again.
@@ -72,7 +101,8 @@ export default function NativeAuthListener() {
     return () => {
       window.removeEventListener("sitelens:auth-callback", onCallback);
       document.removeEventListener("visibilitychange", onVisible);
-    };
+      listenerCancelled = true;
+      nativeListener?.remove();    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
