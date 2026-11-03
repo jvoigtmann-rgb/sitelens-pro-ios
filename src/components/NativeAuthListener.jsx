@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useAuth } from "@/lib/AuthContext";
 import { parseAuthCallbackToken } from "@/lib/nativeAuth";
-
+import { App as CapacitorApp } from '@capacitor/app';
 // Receives the token handed back by the system auth session and installs it as
 // the bundled app's session (localStorage + axios Authorization, via setToken).
 //
