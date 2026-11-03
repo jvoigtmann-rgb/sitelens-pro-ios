@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
         headers: {
           'X-App-Id': appParams.appId
         },
-        token: appParams.token, // Include token if available
+        token: localStorage.getItem('base44_access_token') || appParams.token,
         interceptResponses: true
       });
       
