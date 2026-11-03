@@ -57,6 +57,7 @@ export default function NativeAuthListener() {
     let listenerCancelled = false;
 
 CapacitorApp.addListener("appUrlOpen", ({ url }) => {
+  console.log("SiteLens native callback received:", Boolean(url));
   if (url?.startsWith("sitelenspro://auth")) {
     finish(url);
   }
