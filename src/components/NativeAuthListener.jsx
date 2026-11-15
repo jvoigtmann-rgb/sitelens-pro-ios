@@ -3,6 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { useAuth } from "@/lib/AuthContext";
 import { parseAuthCallbackToken } from "@/lib/nativeAuth";
 import { App as CapacitorApp } from '@capacitor/app';
+import { Browser } from '@capacitor/browser';
 // Receives the token handed back by the system auth session and installs it as
 // the bundled app's session (localStorage + axios Authorization, via setToken).
 //
@@ -26,9 +27,19 @@ export default function NativeAuthListener() {
       const token = parseAuthCallbackToken(url);
       if (!token) return;
       handled = true;
-      base44.auth.setToken(token);
-      await checkAppState();
-      window.location.replace("/");
+      try {
+        base44.auth.setToken(token);
+        // Close the Capacitor authentication browser if it is still displayed.
+        await Browser.close().catch(() => {});
+        await checkAppState();
+        window.location.replace("/");
+      } catch (error) {
+        handled = false;
+        console.error("Native authentication callback failed:", error);
+        window.dispatchEvent(new CustomEvent("sitelens:auth-error", {
+          detail: { message: "Sign-in could not be completed. Please try again." }
+        }));
+      }
     };
 
     // The bridge is injected after the WebView boots and can reject until the
