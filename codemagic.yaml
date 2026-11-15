@@ -53,4 +53,5 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
+        app_id: 6817460653
         submit_to_testflight: true
