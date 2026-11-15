@@ -11,6 +11,8 @@ import GoogleIcon from "@/components/GoogleIcon";
 import AppleIcon from "@/components/AppleIcon";
 import { toast } from "@/components/ui/use-toast";
 import { safeReturnTo } from "@/lib/authReturnTo";
+import { isNativeShell } from "@/lib/nativeEnv";
+import { startNativeProviderAuth } from "@/lib/nativeAuth";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -70,7 +72,11 @@ export default function Register() {
 
   const handleGoogle = async () => {
     try {
-      await base44.auth.loginWithProvider("google", safeReturnTo());
+      if (isNativeShell()) {
+        await startNativeProviderAuth("google", import.meta.env.VITE_BASE44_APP_ID);
+      } else {
+        await base44.auth.loginWithProvider("google", safeReturnTo());
+      }
     } catch (err) {
       setError(err?.message || "Could not start Google sign-in. Please try again.");
     }
@@ -78,7 +84,11 @@ export default function Register() {
 
   const handleApple = async () => {
     try {
-      await base44.auth.loginWithProvider("apple", safeReturnTo());
+      if (isNativeShell()) {
+        await startNativeProviderAuth("apple", import.meta.env.VITE_BASE44_APP_ID);
+      } else {
+        await base44.auth.loginWithProvider("apple", safeReturnTo());
+      }
     } catch (err) {
       setError(err?.message || "Could not start Apple sign-in. Please try again.");
     }
