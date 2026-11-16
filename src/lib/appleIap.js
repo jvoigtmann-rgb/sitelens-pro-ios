@@ -1,5 +1,5 @@
-// Apple In-App Purchase client bridge.
-//
+import { isNativeShell } from "@/lib/nativeEnv";
+// Apple In-App Purchase client bridge
 // The native iOS wrapper (e.g. Capacitor) injects window.SiteLensNative before
 // the web app loads. All purchases go through StoreKit via the bridge, and
 // entitlements are NEVER taken from client claims — the RevenueCat webhook
@@ -17,7 +17,7 @@ export function getNativeBridge() {
 }
 
 export function isNativeApp() {
-  return getNativeBridge() !== null;
+  return isNativeShell();
 }
 
 export async function purchaseProduct(appleProductId) {
