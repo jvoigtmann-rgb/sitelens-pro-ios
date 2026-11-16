@@ -99,9 +99,15 @@ if (hasAuthToken) {
       // Now check if the user is authenticated
       setIsLoadingAuth(true);
       const currentUser = await base44.auth.me();
+
+      if (!currentUser?.id) {
+        throw new Error("Authentication returned no valid user");
+}
+
       setUser(currentUser);
       setIsAuthenticated(true);
-      setIsLoadingAuth(false);
+      setAuthError(null);
+      setIsLoadingAuth(false);   
     } catch (error) {
       console.error('User auth check failed:', error);
       setIsLoadingAuth(false);
