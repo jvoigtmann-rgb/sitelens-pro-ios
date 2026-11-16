@@ -32,7 +32,6 @@ export default function NativeAuthListener() {
         // Close the Capacitor authentication browser if it is still displayed.
         await Browser.close().catch(() => {});
         await checkAppState();
-        window.location.replace("/");
       } catch (error) {
         handled = false;
         console.error("Native authentication callback failed:", error);
