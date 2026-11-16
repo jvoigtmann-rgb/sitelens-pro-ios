@@ -1,14 +1,9 @@
 import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
 import { Purchases } from '@revenuecat/purchases-capacitor';
 import { base44 } from '@/api/base44Client';
 
 const API_KEY = import.meta.env.VITE_REVENUECAT_APPLE_PUBLIC_KEY;
-const PRODUCT_IDS = [
-  'pro_monthly',
-  'report_1',
-  'report_3'
-];
+const PRODUCT_ID = 'pro_monthly';
 let configured = false;
 let identity = null;
 function event(type, detail = {}) { window.dispatchEvent(new CustomEvent(type, { detail })); }
@@ -36,15 +31,12 @@ export function installNativeBridge() {
   if (Capacitor.getPlatform() !== 'ios' || !Capacitor.isNativePlatform()) return;
   window.SiteLensNative = {
     isNative: true,
-    async openAuthSession(url) {
-      await Browser.open({ url });
-},
     async purchase(productIdentifier) {
-      if (!PRODUCT_IDS.includes(productIdentifier)) throw new Error('Unknown Apple subscription product.');
+      if (productIdentifier !== PRODUCT_ID) throw new Error('Unknown Apple subscription product.');
       await setup();
       const { offerings } = await Purchases.getOfferings();
-      const packages = offerings?.current?.availablePackages || [];
-      const selected = packages.find(p => p.product?.identifier === productIdentifier);
+      const packages = [offerings?.current?.monthly, ...(offerings?.current?.availablePackages || [])].filter(Boolean);
+      const selected = packages.find(p => p.product?.identifier === PRODUCT_ID);
       if (!selected) throw new Error('The Apple subscription is not available. Check the RevenueCat offering and App Store Connect.');
       try {
         const result = await Purchases.purchasePackage({ aPackage: selected });
