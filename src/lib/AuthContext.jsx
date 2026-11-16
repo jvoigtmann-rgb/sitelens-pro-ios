@@ -50,9 +50,9 @@ if (hasAuthToken) {
   setUser(null);
   setIsAuthenticated(false);
   setIsLoadingAuth(false);
-}        }
-        setIsLoadingPublicSettings(false);
-      } catch (appError) {
+  }        
+  setIsLoadingPublicSettings(false);
+} catch (appError) {
         console.error('App state check failed:', appError);
         
         // Handle app-level errors
