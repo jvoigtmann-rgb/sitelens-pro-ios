@@ -21,6 +21,34 @@ const APPLE_PRODUCTS_UI = [
       "GPS issue mapping",
       "Pro PDF & capital reports",
     ],
+    },
+  {
+    id: "report_1",
+    name: "1 Extra Report",
+    price: "$14.99",
+    cadence: "",
+    highlight: false,
+    cta: "Buy 1 Report",
+    features: [
+      "1 additional inspection report",
+      "Never expires",
+      "All Pro analysis features",
+      "No subscription required",
+    ],
+  },
+  {
+    id: "report_3",
+    name: "3 Extra Reports",
+    price: "$29.99",
+    cadence: "",
+    highlight: false,
+    cta: "Buy 3 Reports",
+    features: [
+      "3 additional inspection reports",
+      "Never expires",
+      "All Pro analysis features",
+      "No subscription required",
+    ],
   },
 ];
 
