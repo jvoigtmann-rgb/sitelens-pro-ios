@@ -40,12 +40,17 @@ export const AuthProvider = ({ children }) => {
         setAppPublicSettings(publicSettings);
         
         // If we got the app public settings successfully, check if user is authenticated
-        if (appParams.token || localStorage.getItem('base44_access_token')) {
-          await checkUserAuth();
-        } else {
-          setIsLoadingAuth(false);
-          setIsAuthenticated(false);
-        }
+        const hasAuthToken = Boolean(
+  appParams.token || localStorage.getItem('base44_access_token')
+);
+
+if (hasAuthToken) {
+  await checkUserAuth();
+} else {
+  setUser(null);
+  setIsAuthenticated(false);
+  setIsLoadingAuth(false);
+}        }
         setIsLoadingPublicSettings(false);
       } catch (appError) {
         console.error('App state check failed:', appError);
