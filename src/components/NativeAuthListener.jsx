@@ -29,6 +29,7 @@ export default function NativeAuthListener() {
       handled = true;
       try {
         base44.auth.setToken(token);
+        localStorage.setItem("base44_access_token", token);    
         // Close the Capacitor authentication browser if it is still displayed.
         await Browser.close().catch(() => {});
         await checkAppState();
