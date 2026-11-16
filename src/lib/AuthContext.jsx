@@ -112,7 +112,11 @@ if (hasAuthToken) {
       console.error('User auth check failed:', error);
       setIsLoadingAuth(false);
       setIsAuthenticated(false);
-      
+      setUser(null);
+      setAuthError({
+        type: 'authentication_failed',
+        message: error.message || 'Unable to complete sign-in. Please try again.'
+});      
       // If user auth fails, it might be an expired token
       if (error.status === 401 || error.status === 403) {
         setAuthError({
