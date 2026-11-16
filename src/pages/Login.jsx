@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "@/lib/AuthContext";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import { startNativeProviderAuth } from "@/lib/nativeAuth";
 import { safeReturnTo } from '@/lib/authReturnTo';
 
 export default function Login() {
+  const { isAuthenticated, isLoadingAuth } = useAuth();  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -58,8 +60,9 @@ export default function Login() {
       setError(err?.message || "Could not start Apple sign-in. Please try again.");
     }
   };
-
-  return (
+if (!isLoadingAuth && isAuthenticated) {
+  return <Navigate to={returnTo} replace />;
+}  return (
     <AuthLayout
       icon={LogIn}
       title="Welcome back"
