@@ -1,24 +1,24 @@
-import { buildProviderLoginUrl } from "@/lib/nativeEnv";
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
+import { buildProviderLoginUrl } from '@/lib/nativeEnv';
 
-// Starts Apple/Google sign-in inside the bundled native shell.
-//
-// The bridge opens the Base44 login URL in ASWebAuthenticationSession; the
-// platform returns to https://app.sitelens-pro.com/native-callback, which
-// forwards the token to sitelenspro://auth and NativeAuthListener installs it.
+// Open native provider login without depending on the RevenueCat purchase bridge.
+// The bridge is optional for sign-in, but authentication still requires the
+// verified Base44 callback and a valid session token.
 export async function startNativeProviderAuth(provider, appId) {
-  const bridge = window.SiteLensNative;
-  if (!bridge || typeof bridge.openAuthSession !== "function") {
-    throw new Error("Sign-in is unavailable in this build. Please update the app.");
+  if (Capacitor.getPlatform() !== 'ios' || !Capacitor.isNativePlatform()) {
+    throw new Error('Native sign-in is only available in the iOS app.');
   }
-  await bridge.openAuthSession(buildProviderLoginUrl(provider, appId));
+  if (!appId) throw new Error('Base44 app ID is missing.');
+  const url = buildProviderLoginUrl(provider, appId);
+  await Browser.open({ url });
 }
 
-// Tokens are only accepted from our own scheme, never from an arbitrary URL.
 export function parseAuthCallbackToken(url) {
   try {
     const parsed = new URL(url);
-    if (parsed.protocol !== "sitelenspro:") return null;
-    return parsed.searchParams.get("access_token");
+    if (parsed.protocol !== 'sitelenspro:' || parsed.hostname !== 'auth') return null;
+    return parsed.searchParams.get('access_token');
   } catch {
     return null;
   }
