@@ -6,8 +6,8 @@ workflows:
     integrations:
         app_store_connect: "SiteLens Pro Codemagic"
     environment:  
-    groups:
-      - sitelens_ios
+      groups:
+        - sitelens_ios
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.base6a92d4567d7a3a8b4ec54b7b.app
